@@ -1,0 +1,6 @@
+{
+  "project name": {
+    "from": "/Users/Username/Code/Project",
+    "to": "remote@host:~/Code/Project"
+  }
+}
