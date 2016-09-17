@@ -1,6 +1,11 @@
 {
   "project name": {
-    "from": "/Users/Username/Code/Project",
-    "to": "remote@host:~/Code/Project"
+    "from": "/Users/Username/Code/Project/",
+    "to": "remote@host:~/Code/Project",
+    "exclude": [
+      "*.pyc",
+      ".git/",
+      "npm-debug.log"
+    ]
   }
 }
