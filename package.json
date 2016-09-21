@@ -1,6 +1,6 @@
 {
   "name": "rsync-watch",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Node.js app to watch files and directories then sync them to the remote server using rsync",
   "main": "index.js",
   "author": "Mikhail Kalashnik <splurov@gmail.com> (http://mkln.ru/en/)",

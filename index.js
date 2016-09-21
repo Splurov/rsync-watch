@@ -2,6 +2,8 @@ const chokidar = require('chokidar');
 const Rsync = require('rsync');
 const debounce = require('debounce');
 
+const consoleTimestamp = require('./lib/console-timestamp');
+
 const CONFIG = require('./config.json');
 
 // For node 4+ support
@@ -12,16 +14,16 @@ const CONFIG = require('./config.json');
     const watchers = [];
 
     function quit() {
-        console.log(`\n[stopping]`);
+        consoleTimestamp.log(`\n[stopping]`);
 
         for (let entry of synchronizers) {
             let synchronizer = entry[1];
-            console.log(`[sync stop] ${synchronizer.project}`);
+            consoleTimestamp.log(`[sync stop] ${synchronizer.project}`);
             synchronizer.process.kill();
         }
 
         for (let watcher of watchers) {
-            console.log(`[watch stop] ${watcher.project}`);
+            consoleTimestamp.log(`[watch stop] ${watcher.project}`);
             watcher.watcher.close();
         }
 
@@ -44,14 +46,15 @@ const CONFIG = require('./config.json');
             .source(CONFIG[project].from)
             .destination(CONFIG[project].to);
 
-        console.log(`[sync start] ${project}`);
+        consoleTimestamp.log(`[sync start] ${project}`);
         return new Promise((resolve, reject) => {
             const rsyncProcess = rsync.execute((error, code, command) => {
                 if (error) {
-                    throw error;
+                    reject(error);
+                    return;
                 }
 
-                console.log(`[sync finish] ${project} | ${command}`);
+                consoleTimestamp.log(`[sync finish] ${project} | ${command}`);
                 resolve(rsyncProcess.pid);
             }, (data) => {
                 process.stdout.write(`[sync] ${data.toString('ascii')}`);
@@ -74,19 +77,19 @@ const CONFIG = require('./config.json');
         const syncDebounced = debounce(() => {
             sync(project)
                 .catch(error => {
-                    console.error(`[${project} | sync] `, error);
+                    consoleTimestamp.error(`[${project} | sync error] `, error);
                 });
         }, 500);
         watcher
             .on('ready', function() {
-                console.log(`[watch] ${project}`);
+                consoleTimestamp.log(`[watch] ${project}`);
             })
             .on('all', function(event, path) {
-                console.log(`[watch | ${event}] ${path}`);
+                consoleTimestamp.log(`[watch | ${event}] ${path}`);
                 syncDebounced();
             })
             .on('error', function(error) {
-                console.error(error);
+                consoleTimestamp.error(`[${project} | watch error] `, error);
             });
     }
 
@@ -94,7 +97,7 @@ const CONFIG = require('./config.json');
         sync(project).then(function() {
             watch(project);
         }).catch((error) => {
-            console.error(`[${project} | sync] `, error);
+            consoleTimestamp.error(`[${project} | sync error] `, error);
         });
     }
 
