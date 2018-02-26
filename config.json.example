@@ -6,6 +6,15 @@
       "*.pyc",
       ".git/",
       "npm-debug.log"
-    ]
+    ],
+    "options": {
+      "out-format": "%n",
+      "recursive": null,
+      "copy-links": null,
+      "perms": null,
+      "times": null,
+      "delete": null,
+      "delete-during": null
+    }
   }
 }

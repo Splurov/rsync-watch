@@ -35,19 +35,12 @@ const CONFIG = require('./config.json');
 
     function sync(project) {
         const rsync = new Rsync()
-            .set('out-format', '%n')
-            .set('recursive')
-            .set('copy-links')
-            .set('perms')
-            .set('times')
-            .set('delete')
-            .set('delete-during')
             .exclude(CONFIG[project].exclude || [])
             .source(CONFIG[project].from)
             .destination(CONFIG[project].to);
 
-        for (let option_key in (CONFIG[project].options || {})) {
-            rsync.set(option_key, CONFIG[project].options[option_key])
+        for (let optionKey in (CONFIG[project].options || {})) {
+            rsync.set(optionKey, CONFIG[project].options[optionKey]);
         }
 
         consoleTimestamp.log(`[sync start] ${project}`);
