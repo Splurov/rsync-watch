@@ -46,6 +46,10 @@ const CONFIG = require('./config.json');
             .source(CONFIG[project].from)
             .destination(CONFIG[project].to);
 
+        for (let option_key in (CONFIG[project].options || {})) {
+            rsync.set(option_key, CONFIG[project].options[option_key])
+        }
+
         consoleTimestamp.log(`[sync start] ${project}`);
         return new Promise((resolve, reject) => {
             const rsyncProcess = rsync.execute((error, code, command) => {
