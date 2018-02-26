@@ -7,7 +7,7 @@
       ".git/",
       "npm-debug.log"
     ],
-    "options": {
+    "rsyncOptions": {
       "out-format": "%n",
       "recursive": null,
       "copy-links": null,
