@@ -8,9 +8,21 @@ Node.js app to watch files and directories then sync them to the remote server u
 - Execute `npm install`
 - Copy `config.json.example` to `config.json`
 - Edit `config.json`
+    - Exclude pattern must be compatible with <https://man.developpez.com/man1/rsync/#L16>
+      and <https://github.com/micromatch/micromatch#matching-features> at the same time
 - Execute `npm run sync` to start sync and watch
 
 ## Changelog
+
+### 3.0.0
+
+- \[Breaking\] Exclude config also applied to watcher (before only for rsync).
+  Pattern must be compatible with <https://man.developpez.com/man1/rsync/#L16>
+  and <https://github.com/micromatch/micromatch#matching-features> at the same time
+
+### 2.0.1
+
+- Update dependencies to latest versions
 
 ### 2.0.0
 
