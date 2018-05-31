@@ -3,9 +3,10 @@
     "from": "/Users/Username/Code/Project/",
     "to": "remote@host:~/Code",
     "exclude": [
-      "*.pyc",
-      ".git/",
-      "npm-debug.log"
+      "**/*.pyc",
+      "npm-debug.log",
+      "**/.git",
+      "**/node_modules"
     ],
     "rsyncOptions": {
       "out-format": "%n",

@@ -68,6 +68,8 @@ const CONFIG = require('./config.json');
     function watch(project) {
         const watcher = chokidar.watch(CONFIG[project].from, {
             ignoreInitial: true,
+            ignored: CONFIG[project].exclude || null,
+            cwd: CONFIG[project].from,
         });
         watchers.push({project, watcher});
 
