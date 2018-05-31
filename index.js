@@ -28,7 +28,7 @@ const CONFIG = require('./config.json');
         }
 
         process.exit();
-    };
+    }
 
     process.on('SIGINT', quit); // run signal handler on CTRL-C
     process.on('SIGTERM', quit); // run signal handler on SIGTERM

@@ -1,16 +1,17 @@
 {
   "name": "rsync-watch",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Node.js app to watch files and directories then sync them to the remote server using rsync",
   "main": "index.js",
   "author": "Mikhail Kalashnik <splurov@gmail.com> (http://mkln.ru/en/)",
-  "license": "Creative Commons Attribution 4.0 International",
+  "repository": "https://github.com/Splurov/rsync-watch",
+  "license": "CC-BY-4.0",
   "dependencies": {
-    "chokidar": "~1.6.0",
-    "debounce": "~1.0.0",
-    "rsync": "~0.5.0"
+    "chokidar": "~2.0.3",
+    "debounce": "~1.1.0",
+    "rsync": "~0.6.1"
   },
   "scripts": {
-    "sync": "node index.js"    
+    "sync": "node index.js"
   }
 }

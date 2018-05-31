@@ -12,6 +12,10 @@ Node.js app to watch files and directories then sync them to the remote server u
 
 ## Changelog
 
+### 2.0.1
+
+- Update dependencies to latest versions
+
 ### 2.0.0
 
 - rsync configuration moved from code to config.json as `rsyncOptions` property.
