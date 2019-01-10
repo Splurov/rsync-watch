@@ -97,6 +97,7 @@ const CONFIG = require('./config.json');
             watch(project);
         }).catch((error) => {
             consoleTimestamp.error(`[${project} | sync error] `, error);
+            quit();
         });
     }
 

@@ -14,6 +14,10 @@ Node.js app to watch files and directories then sync them to the remote server u
 
 ## Changelog
 
+### 3.0.1
+
+- Stop script execution on initial sync error
+
 ### 3.0.0
 
 - \[Breaking\] Exclude config also applied to watcher (before only for rsync).
