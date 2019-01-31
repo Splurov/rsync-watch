@@ -4,7 +4,7 @@ const debounce = require('debounce');
 
 const consoleTimestamp = require('./lib/console-timestamp');
 
-const CONFIG = require('./config.json');
+const CONFIG = require('./config');
 
 // For node 4+ support
 (function () {
