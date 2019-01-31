@@ -1,4 +1,4 @@
-{
+module.exports = {
   "project name": {
     "from": "/Users/Username/Code/Project/",
     "to": "remote@host:~/Code",
@@ -6,7 +6,7 @@
       "**/*.pyc",
       "npm-debug.log",
       "**/.git",
-      "**/node_modules"
+      "**/node_modules",
     ],
     "rsyncOptions": {
       "out-format": "%n",
@@ -15,7 +15,7 @@
       "perms": null,
       "times": null,
       "delete": null,
-      "delete-during": null
-    }
-  }
-}
+      "delete-during": null,
+    },
+  },
+};
