@@ -1,10 +1,11 @@
 const chokidar = require('chokidar');
 const Rsync = require('rsync');
 const debounce = require('debounce');
+const fs = require('fs');
 
 const consoleTimestamp = require('./lib/console-timestamp');
 
-const CONFIG = require('./config.json');
+const CONFIG = require(fs.existsSync('./') ? './config' : './config.json');
 
 // For node 4+ support
 (function () {
