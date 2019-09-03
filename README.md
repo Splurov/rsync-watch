@@ -14,6 +14,10 @@ Node.js app to watch files and directories then sync them to the remote server u
 
 ## Changelog
 
+### 4.0.1
+
+- Update dependencies due to security warnings
+
 ### 4.0.0
 
 - Configuration file moved from config.json to config.js
