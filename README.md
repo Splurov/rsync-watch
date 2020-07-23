@@ -14,6 +14,10 @@ Node.js app to watch files and directories then sync them to the remote server u
 
 ## Changelog
 
+### 4.0.2
+
+- Update dependencies due to kind-of security warnings
+
 ### 4.0.1
 
 - Update dependencies due to security warnings
