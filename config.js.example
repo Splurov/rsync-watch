@@ -16,6 +16,7 @@ module.exports = {
       "times": null,
       "delete": null,
       "delete-during": null,
+      "no-owner": null,
     },
   },
 };
