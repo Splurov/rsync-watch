@@ -1,10 +1,18 @@
 const chokidar = require('chokidar');
 const Rsync = require('rsync');
 const debounce = require('debounce');
+const notifier = require('node-notifier');
+
 
 const consoleTimestamp = require('./lib/console-timestamp');
 
 const CONFIG = require('./config');
+
+const NOTIFICATION = {
+    HEADING: 'RSYNC',
+    SUCCESS: 'Synced successfully.',
+    ERROR: 'Sync Failed.'
+};
 
 // For node 4+ support
 (function () {
@@ -47,10 +55,11 @@ const CONFIG = require('./config');
         return new Promise((resolve, reject) => {
             const rsyncProcess = rsync.execute((error, code, command) => {
                 if (error) {
+                    notifyError();
                     reject(error);
                     return;
                 }
-
+                notifySuccess();
                 consoleTimestamp.log(`[sync finish] ${project} | ${command}`);
                 resolve(rsyncProcess.pid);
             }, (data) => {
@@ -63,6 +72,20 @@ const CONFIG = require('./config');
 
             synchronizers.set(rsyncProcess.pid, {project, process: rsyncProcess});
         });
+    }
+
+    function notifySuccess() {
+        notifier.notify({
+            title: NOTIFICATION.HEADING,
+            message: NOTIFICATION.SUCCESS
+          });
+    }
+
+    function notifyError() {
+        notifier.notify({
+            title: NOTIFICATION.HEADING,
+            message: NOTIFICATION.ERROR
+          });
     }
 
     function watch(project) {
