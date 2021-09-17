@@ -16,7 +16,10 @@ module.exports = {
       "times": null,
       "delete": null,
       "delete-during": null,
-      "no-owner": null,
+      "no-owner": null
     },
+    "options": {
+        "desktopNotification": true
+    }
   },
 };

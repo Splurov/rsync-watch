@@ -41,7 +41,7 @@ const NOTIFICATION = {
     process.on('SIGINT', quit); // run signal handler on CTRL-C
     process.on('SIGTERM', quit); // run signal handler on SIGTERM
 
-    function sync(project) {
+    function sync(project, desktopNotification = true) {
         const rsync = new Rsync()
             .exclude(CONFIG[project].exclude || [])
             .source(CONFIG[project].from)
@@ -55,11 +55,11 @@ const NOTIFICATION = {
         return new Promise((resolve, reject) => {
             const rsyncProcess = rsync.execute((error, code, command) => {
                 if (error) {
-                    notifyError();
+                    desktopNotification && notifyError();
                     reject(error);
                     return;
                 }
-                notifySuccess();
+                desktopNotification && notifySuccess();
                 consoleTimestamp.log(`[sync finish] ${project} | ${command}`);
                 resolve(rsyncProcess.pid);
             }, (data) => {
@@ -97,7 +97,7 @@ const NOTIFICATION = {
         watchers.push({project, watcher});
 
         const syncDebounced = debounce(() => {
-            sync(project)
+            sync(project, CONFIG[project].options.desktopNotification)
                 .catch(error => {
                     consoleTimestamp.error(`[${project} | sync error] `, error);
                 });
@@ -116,7 +116,7 @@ const NOTIFICATION = {
     }
 
     for (let project in CONFIG) {
-        sync(project).then(function() {
+        sync(project, CONFIG[project].options.desktopNotification).then(function() {
             watch(project);
         }).catch((error) => {
             consoleTimestamp.error(`[${project} | sync error] `, error);
