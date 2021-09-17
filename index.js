@@ -41,7 +41,7 @@ const NOTIFICATION = {
     process.on('SIGINT', quit); // run signal handler on CTRL-C
     process.on('SIGTERM', quit); // run signal handler on SIGTERM
 
-    function sync(project, desktopNotification = true) {
+    function sync(project) {
         const rsync = new Rsync()
             .exclude(CONFIG[project].exclude || [])
             .source(CONFIG[project].from)
@@ -55,11 +55,11 @@ const NOTIFICATION = {
         return new Promise((resolve, reject) => {
             const rsyncProcess = rsync.execute((error, code, command) => {
                 if (error) {
-                    desktopNotification && notifyError();
+                    notifyError(project);
                     reject(error);
                     return;
                 }
-                desktopNotification && notifySuccess();
+                notifySuccess(project);
                 consoleTimestamp.log(`[sync finish] ${project} | ${command}`);
                 resolve(rsyncProcess.pid);
             }, (data) => {
@@ -74,15 +74,15 @@ const NOTIFICATION = {
         });
     }
 
-    function notifySuccess() {
-        notifier.notify({
+    function notifySuccess(project) {
+        CONFIG[project].options?.desktopNotification && notifier.notify({
             title: NOTIFICATION.HEADING,
             message: NOTIFICATION.SUCCESS
           });
     }
 
-    function notifyError() {
-        notifier.notify({
+    function notifyError(project) {
+        CONFIG[project].options?.desktopNotification && notifier.notify({
             title: NOTIFICATION.HEADING,
             message: NOTIFICATION.ERROR
           });
@@ -97,7 +97,7 @@ const NOTIFICATION = {
         watchers.push({project, watcher});
 
         const syncDebounced = debounce(() => {
-            sync(project, CONFIG[project].options.desktopNotification)
+            sync(project)
                 .catch(error => {
                     consoleTimestamp.error(`[${project} | sync error] `, error);
                 });
@@ -116,7 +116,7 @@ const NOTIFICATION = {
     }
 
     for (let project in CONFIG) {
-        sync(project, CONFIG[project].options.desktopNotification).then(function() {
+        sync(project).then(function() {
             watch(project);
         }).catch((error) => {
             consoleTimestamp.error(`[${project} | sync error] `, error);
